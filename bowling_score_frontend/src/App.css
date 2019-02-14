@@ -1,25 +1,52 @@
-.App {
-  text-align: center;
+*{
+  /*border: 1px solid red;*/
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+a{
+  text-decoration: none;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+nav{
+  background: #6e7f6f;
+  color:#eeede6
 }
 
-.App-title {
-  font-size: 1.5em;
+nav ul{
+ overflow:hidden;
 }
 
-.App-intro {
-  font-size: large;
+nav li{
+  float:left;
+  cursor:pointer;
+}
+
+nav li a{
+  color:white;
+}
+
+li.seperator{
+  border-right: 0.1em solid white;
+  /*margin-right: 0.2em;*/
+}
+
+.floating-left{
+  overflow: hidden;
+}
+.floating-left li{
+  float: left;
+  padding: 0 5px;
+}
+
+nav{
+  /*border: 1px solid red;*/
+}
+
+.delete-btn{
+  padding: 0.2em 0.4em;
+  margin: 0 0.4em;
 }
 
 @keyframes App-logo-spin {

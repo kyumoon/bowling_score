@@ -1,37 +1,34 @@
 import * as React from 'react';
 import './App.css';
+import scoreStore from './store/ScoreStore';
+import {Provider} from "mobx-react";
+import ScoreBoard from "./components/ScoreBoard";
+import createBrowserHistory from "history/createBrowserHistory";
+import Navigation from "./components/Navigation";
+import {Route, Router} from "react-router";
+import Statics from "./components/Statics";
 
-import logo from './logo.svg';
+// import logo from './logo.svg';
 
-class App extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      username: ''
-    }
-  }
+class App extends React.Component {
 
   public render() {
-    return (
+      return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          {this.state.username}
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
+          <Provider store={scoreStore}>
+          <Router history={createBrowserHistory()}>
+              <div>
+                  <Navigation/>
+                  <Route path="/" exact component={ScoreBoard} />
+                  <Route path="/Statics" exact component={Statics} />
+              </div>
+          </Router>
+          </Provider>
+
+
       </div>
     );
   }
-
-  componentDidMount() {
-    fetch('/api/getUsername')
-      .then(res => res.json())
-      .then(user => this.setState({ username: user.username }));
-  }
-
 }
 
 export default App;
