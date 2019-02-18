@@ -8,8 +8,9 @@ interface ScoreObj {
     id:number,
     score:number,
     crudType:string,
-    regDate:string
+    reg_date:string
 }
+
 @inject('store')
 @observer
 class ScoreBoard extends React.Component<any,any>{
@@ -27,16 +28,15 @@ class ScoreBoard extends React.Component<any,any>{
         }
 
         let returnDate = (item:ScoreObj)=>{
-            return <span>{moment(item.regDate).format('YYYY-MM-DD HH:mm:ss')}</span>
+            return <span>{item.reg_date?moment(item.reg_date).format('YYYY-MM-DD HH:mm:ss'):'new'}</span>
         }
 
         const scoreList = this.scoreStore.scoreList.map((item:any)=>{
             scoreSum+=item.score;
-            // const date = <span>{item.regDate}</span>;
             if(item.crudType === 'D'){
-                return <li><del key={item.id} style={temp}>{item.score}</del><button  className={'delete-btn'} onClick={()=>{  this.scoreStore.removeScore(item);} }>Cancle</button>{returnDate(item)}</li>
+                return <li key={item._id||item.id}><del style={temp}>{item.score}</del><button  className={'delete-btn'} onClick={()=>{  this.scoreStore.removeScore(item);} }>Cancle</button>{returnDate(item)}</li>
             }
-            return <li key={item.id}>{item.score}<button  className={'delete-btn'} onClick={()=>{  this.scoreStore.removeScore(item);} }>X</button>{returnDate(item)}</li>
+            return <li key={item._id||item.id}>{item.score}<button  className={'delete-btn'} onClick={()=>{  this.scoreStore.removeScore(item);} }>X</button>{returnDate(item)}</li>
         });
         if(scoreList.length){
             scoreAvg = Math.round(scoreSum/scoreList.length*10)/10;
@@ -64,6 +64,10 @@ class ScoreBoard extends React.Component<any,any>{
         let target = e.target;
         let gameCount = +target.getAttribute('data-game')||0;
         this.scoreStore.selectList(gameCount);
+    }
+
+    componentDidMount(){
+        this.scoreStore.selectList();
     }
 
 }

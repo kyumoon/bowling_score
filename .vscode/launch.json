@@ -4,14 +4,16 @@
     // 자세한 내용을 보려면 https://go.microsoft.com/fwlink/?linkid=830387을(를) 방문하세요.
     "version": "0.2.0",
     "configurations": [
+
         {
+            "name": "Current TS File",
             "type": "node",
             "request": "launch",
-            "name": "프로그램 시작",
-            "program": "${workspaceFolder}/bowling_score_backend\\dbConfig.ts",
-            "outFiles": [
-                "${workspaceFolder}/**/*.js"
-            ]
+            "args": ["server.ts","dev"],
+            "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
+            "sourceMaps": true,
+            "cwd": "${workspaceRoot}/bowling_score_backend",
+            "protocol": "inspector",
         }
     ]
 }

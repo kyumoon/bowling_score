@@ -18,8 +18,8 @@ class ScoreStore{
             score,
             crudType : "C"
         }
-        this.originScoreList.push(newItem);
-        this.scoreList.push(newItem);
+        this.originScoreList.splice(0,0,newItem);
+        this.scoreList.splice(0,0,newItem);
     }
 
     @action
@@ -56,7 +56,7 @@ class ScoreStore{
             }
         }).then((json:any)=>{
             console.dir(json);
-            // this.selectList();
+            this.selectList();
         });
     }
 
@@ -64,7 +64,8 @@ class ScoreStore{
     selectList = (defaultGame = 5)=>{
         let request = {
             method: 'get',
-        }
+        };
+        
         fetch(`/score/${defaultGame}`,request).then((response:Response):any=>{
             if(response.ok){
                 console.log('response 200');
@@ -74,8 +75,8 @@ class ScoreStore{
             }
         }).then((json:any)=>{
             console.dir(json);
-            this.originScoreList = json;
-            this.scoreList = json;
+            this.originScoreList = json||[];
+            this.scoreList = json||[];
         });
     }
 
