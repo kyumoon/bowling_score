@@ -10,6 +10,7 @@ interface ScoreObj {
 class ScoreStore{
     @observable scoreList:Array<ScoreObj>=[];
     originScoreList:Array<ScoreObj>=[];
+    @observable avgList:Array<any>=[];
 
     @action
     addScoreList = (score:number)=>{
@@ -48,11 +49,10 @@ class ScoreStore{
         }
         fetch('/score',request).then((response:Response):any=>{
             if(response.ok){
-                console.log('response 200');
                 return response.text();
                 // return response.json();
             }else{
-                console.log('response error occured!!');
+                console.log('save api error!');
             }
         }).then((json:any)=>{
             console.dir(json);
@@ -91,6 +91,25 @@ class ScoreStore{
         });
         let scoreAvg = Math.round(scoreSum/scoreList.length*10)/10;
         return scoreAvg;
+    }
+
+    @action
+    selectAvg = async (limitDays = 7)=>{
+        let request = {
+            method: 'get',
+        };
+        
+        await fetch(`/average-of-day/${limitDays}`,request).then((response:Response):any=>{
+            if(response.ok){
+                console.log('response 200');
+                return response.json();
+            }else{
+                console.log('response error occured!!');
+            }
+        }).then((json:any)=>{
+            console.dir(json);
+            this.avgList = json||[];
+        });
     }
 }
 

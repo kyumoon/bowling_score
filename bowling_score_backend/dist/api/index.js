@@ -8,3 +8,4 @@ function default_1(app) {
     ScoreAPI_1.default(app);
 }
 exports.default = default_1;
+//# sourceMappingURL=index.js.map

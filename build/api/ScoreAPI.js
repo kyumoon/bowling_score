@@ -1,19 +1,12 @@
 "use strict";
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var mongoose_1 = __importStar(require("mongoose"));
+exports.__esModule = true;
+var mongoose_1 = require("mongoose");
 var ScoreSchema = new mongoose_1.Schema({
     name: String,
     score: Number,
-    reg_date: { type: Date, default: Date.now }
+    reg_date: { type: Date, "default": Date.now }
 });
-exports.scoreTernal = mongoose_1.default.model('score', ScoreSchema);
+exports.scoreTernal = mongoose_1["default"].model('score', ScoreSchema);
 function default_1(app) {
     app.post('/score', function (req, res) {
         var saveList = req.body.newScores || [];
@@ -24,14 +17,14 @@ function default_1(app) {
                     temp.save().then(function (score) {
                         console.log(score);
                         res.status(200).send('success');
-                    }).catch(function (err) {
+                    })["catch"](function (err) {
                         console.log(err);
                     });
                     break;
                 case 'D':
                     exports.scoreTernal.remove({ _id: item._id }).then(function (result) {
                         console.log(result + ' removed');
-                    }).catch(function (err) {
+                    })["catch"](function (err) {
                         console.log('remove error');
                     });
                     break;
@@ -56,7 +49,7 @@ function default_1(app) {
                 $group: {
                     _id: { date: { $dateToString: { format: "%Y-%m-%d", date: "$reg_date" } } },
                     avgScore: { $avg: "$score" }
-                },
+                }
             },
             { $limit: +req.params.limitDays },
             { $sort: { "_id": 1 } }
@@ -71,5 +64,4 @@ function default_1(app) {
         });
     });
 }
-exports.default = default_1;
-//# sourceMappingURL=ScoreAPI.js.map
+exports["default"] = default_1;

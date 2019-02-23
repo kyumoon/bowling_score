@@ -1,5 +1,4 @@
 import { Express } from 'express';
-import db from '../dbConfig';
 import mongoose, { Schema } from 'mongoose';
 
 interface IScore {
@@ -18,8 +17,8 @@ export const scoreTernal = mongoose.model('score', ScoreSchema);
 
 export default function (app: Express) {
     app.post('/score', (req, res) => {
-        let saveList = req.body.newScores || [];
-        saveList.map((item: IScore) => {
+        let saveList: Array<any> = req.body.newScores || [];
+        saveList.reverse().map((item: IScore) => {
             switch (item.crudType) {
                 case 'C':
                     let temp = new scoreTernal({ score: item.score, reg_date: item.regDate });
@@ -40,10 +39,10 @@ export default function (app: Express) {
                     break;
             }
         });
+        res.status(200).send('success');
     });
 
     app.get('/score/:game', (req, res) => {
-        let result = null;
         scoreTernal.find((err, result) => {
             if (err) {
                 console.log(err);
@@ -51,7 +50,28 @@ export default function (app: Express) {
                 console.log(result);
                 res.send(result);
             }
-        }).sort({_id:-1}).limit(+req.params.game);
+        }).sort({ _id: -1 }).limit(+req.params.game);
 
+    })
+
+    app.get('/average-of-day/:limitDays', (req, res) => {
+        scoreTernal.aggregate([
+            {
+                $group:
+                {
+                    _id: { date: { $dateToString: { format: "%Y-%m-%d", date: "$reg_date" } } },
+                    avgScore: { $avg: "$score" }
+                },
+            },
+            { $limit: +req.params.limitDays },
+            { $sort: {"_id":1}}
+        ], (err: any, result: any) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(result);
+                res.send(result);
+            }
+        });
     })
 }

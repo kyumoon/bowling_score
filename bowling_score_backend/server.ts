@@ -5,17 +5,20 @@ import apiRegister from './api';
 import dbConnection from './dbConfig';
 import bodyParser from 'body-parser';
 
-
 dbConnection();
-
 
 const app =express();
 const PORT = process.env.PORT || 5050;
-
-app.use(express.static(path.join(__dirname, '..', 'public/')));
+app.set('views', __dirname + '/public');
+app.engine('html', require('ejs').renderFile);
+app.use(express.static(path.join(__dirname)));
 app.use(bodyParser());
 
 // if you need api routes add them here
+
+app.get("/",(req,res)=>{
+    res.render('index.html')
+});
 
 app.get("/api/getUsername", function(req, res, next){
     res.send({ username: os.userInfo().username+'test' });

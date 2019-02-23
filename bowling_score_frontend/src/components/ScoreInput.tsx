@@ -15,8 +15,10 @@ class ScoreInput extends React.Component<any,any>{
     public render(){
         return (
             <div>
-                <input id={'scoreInput'} onChange={this.onChange} onKeyDown={this.onEnter}  value={this.value}/>
-                <button onClick={this.onEnter} >Add</button>
+                <div>
+                    <input className="wide_button" placeholder="점수" id={'scoreInput'} onChange={this.onChange} onKeyDown={this.onEnter}  value={this.value}/>
+                </div>
+                <button className="wide_button" onClick={this.onEnter} >추가</button>
             </div>
             );
     }
