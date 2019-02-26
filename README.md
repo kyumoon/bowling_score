@@ -2,3 +2,5 @@
 점수등록과 일간 에버리지 차트를 볼 수 있습니다.
 
 개발스택: react, typescript, mobx, express, mongodb
+
+http://34.85.21.227/
