@@ -3,4 +3,4 @@
 
 개발스택: react, typescript, mobx, express, mongodb
 
-http://34.85.21.227/
+http://35.200.5.207/

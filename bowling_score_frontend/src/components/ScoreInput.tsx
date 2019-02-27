@@ -26,7 +26,7 @@ class ScoreInput extends React.Component<any,any>{
     onEnter = (e:any)=>{
         let temp = document.getElementById('scoreInput') as HTMLInputElement;
         let newVal:string = temp.value;
-        if(e.key === 'Enter' || e.currentTarget.textContent === 'Add'){
+        if(e.key === 'Enter' || e.currentTarget.textContent === '추가'){
             this.value='';
             scoreStore.addScoreList( +newVal );
             return;
